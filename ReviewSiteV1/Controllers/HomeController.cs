@@ -13,18 +13,26 @@ namespace ReviewSiteV1.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Anime()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Anime Specific Reviews.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Movie()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Movie Specific Reviews.";
 
             return View();     
         }
+
+        public ActionResult Game()
+        {
+            ViewBag.Message = "Game Specific Reviews.";
+
+            return View();
+        }
+
     }
 }
