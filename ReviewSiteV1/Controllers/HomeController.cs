@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ReviewSiteV1.Repositories;
 
 namespace ReviewSiteV1.Controllers
 {
@@ -10,7 +11,9 @@ namespace ReviewSiteV1.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var reviewRepository = new ReviewRepository();
+            var ReviewList = reviewRepository.GetAll();
+            return View(ReviewList);
         }
 
         public ActionResult Anime()
@@ -32,6 +35,13 @@ namespace ReviewSiteV1.Controllers
             ViewBag.Message = "Game Specific Reviews.";
 
             return View();
+        }
+
+        public ActionResult GetImage(int imageId)
+        {
+            // https://msdn.microsoft.com/en-us/library/system.web.mvc.filecontentresult.filecontentresult(v=vs.118).aspx#M:System.Web.Mvc.FileContentResult.
+            throw new NotImplementedException();
+            
         }
 
     }

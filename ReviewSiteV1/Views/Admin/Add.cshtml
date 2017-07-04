@@ -4,7 +4,7 @@
 }
 
 <h2>Please enter required fields for adding review:</h2>
-@using (var form = @Html.BeginForm("AddSave", "Admin", null, FormMethod.Post, new { enctype = "multipart / form - data" }))
+@using (var form = @Html.BeginForm("AddSave", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="row">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="row">
-        <div class="md-col-12"><input type="submit" value="Enroll!" /></div>
+        <div class="md-col-12"><input type="submit" value="Add Review" /></div>
     </div>
 
 }

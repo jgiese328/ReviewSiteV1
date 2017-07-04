@@ -56,7 +56,7 @@ namespace ReviewSiteV1.Controllers
                 {
                     image.ImageData = reader.ReadBytes(upload.ContentLength);
                 }
-                review.Image = new List<Image> { image };
+                review.Image = image;
             }
 
 

@@ -12,6 +12,9 @@ namespace ReviewSiteV1.Repositories
         {
             using (var context = new Context())
             {
+                if(review.Image!=null)
+                    context.Images.Add(review.Image);
+
                 context.Reviews.Add(review);
 
                 context.SaveChanges();
@@ -45,10 +48,20 @@ namespace ReviewSiteV1.Repositories
             List<Review> reviews = new List<Review>();
             using (var context = new Context())
             {
-                reviews = context.Reviews.ToList();
+                reviews = context.Reviews.Include("Image").ToList();
+                return reviews;
             }
+        }
 
-            return reviews;
+        public List<Review> GetAll(string type)
+        {
+            List<Review> reviews = new List<Review>();
+            using (var context = new Context())
+            {
+                reviews = context.Reviews.ToList();
+                var results = reviews.Where(x=>x.ReviewType == type);
+                return results.ToList();
+            }            
         }
 
         public Review GetById(int id)
