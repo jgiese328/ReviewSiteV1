@@ -37,12 +37,5 @@ namespace ReviewSiteV1.Controllers
             return View();
         }
 
-        public ActionResult GetImage(int imageId)
-        {
-            // https://msdn.microsoft.com/en-us/library/system.web.mvc.filecontentresult.filecontentresult(v=vs.118).aspx#M:System.Web.Mvc.FileContentResult.
-            throw new NotImplementedException();
-            
-        }
-
     }
 }

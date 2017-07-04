@@ -38,10 +38,19 @@ namespace ReviewSiteV1.Controllers
         [HttpPost]
         public ActionResult AddSave(Review review, HttpPostedFileBase upload)
         {
+            ViewBag.Error = "";
+
             if (!ModelState.IsValid)
             {
-                return View("Enroll");
+                return View();
             }
+
+            if (upload.ContentLength > 3500000)
+            {
+                ViewBag.Error = "File Size is Too Large";
+                return View();
+            }
+
 
             reviewRepository = new ReviewRepository();
 
@@ -59,10 +68,28 @@ namespace ReviewSiteV1.Controllers
                 review.Image = image;
             }
 
-
             reviewRepository.Create(review);
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult GetImage(int imageId)
+        {
+            if (imageId != 0)
+            {
+                reviewRepository = new ReviewRepository();
+                var image = reviewRepository.GetImageById(imageId);
+                
+                foreach (KeyValuePair<string, byte[]> pair in image)
+                {
+                    return new FileContentResult(pair.Value, pair.Key);
+                }
+                return View("Index");
+
+            }
+            else
+                return View("Index");
+        }
+
 
         public ActionResult Edit()
         {
@@ -75,5 +102,8 @@ namespace ReviewSiteV1.Controllers
             ViewBag.Message = "Delete Posted Reviews.";
             return View();
         }
+
+
+
     }
 }

@@ -71,8 +71,19 @@ namespace ReviewSiteV1.Repositories
             {
                 review = context.Reviews.Find(id);
             }
-
             return review;
+        }
+
+        public Dictionary<string, byte[]> GetImageById(int id)
+        {
+            Image image = null;
+            using (var context = new Context())
+            {
+                image = context.Images.Find(id);
+                Dictionary<string, byte[]> dictionary = new Dictionary<string, byte[]>();
+                dictionary.Add(image.ContentType, image.ImageData);
+                return dictionary;
+            }
         }
     }
 }

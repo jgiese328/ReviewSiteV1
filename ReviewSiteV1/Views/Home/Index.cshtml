@@ -12,13 +12,10 @@
             <div style="float:right; outline: 1px solid grey; background-color:#9A7E7E; text-align: center;" class="col-sm-11">
                 <p>@item.ReviewHeader - @item.PublishDate</p>
                 <div class="row">
-                   <div style="outline: 1px solid grey; min-height: 8em;" class="col-lg-2">
-                       @*<img src="@Url.Action("GetImage", new { imageId = item.Image.Id })" />
-                           SHOULD JUST NEED TO FIGURE OUT THE GET IMAGE FROM THAT LINK ON THE CONTROLLER, and then this should work
-                           
-                           *@
+                    <div style="outline: 1px solid grey; min-height: 8em;" class="col-lg-3">
+                       <img style="max-width: 95%" src="@Url.Action("GetImage", "Admin", new { imageId = item.Image.Id })" />
                     </div>
-                    <div style="background-color: #BC5C5C; outline:1px solid grey; min-height: 8em;" class="col-lg-10">
+                    <div style="background-color: #BC5C5C; outline:1px solid grey; min-height: 9.5em; height: 100%;" class="col-lg-9">
                         @item.ReviewText
                     </div>
                 </div>
@@ -26,3 +23,4 @@
         </div>
         }
     </div>
+    

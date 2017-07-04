@@ -9,7 +9,6 @@ namespace ReviewSiteV1.Models
     { 
         // make sure it is generating auto-increment/ primary key
         public int Id { get; set; }
-        // [MaxLength: 100]
         public string ReviewType { get; set; }
         public DateTime PublishDate { get; set; } = DateTime.Now;
         public string ReviewHeader { get; set; }
