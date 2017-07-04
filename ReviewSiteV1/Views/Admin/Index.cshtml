@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-md-2 "></div>
+        <div class="col-md-6 ">
+            <h2 class="text-center" style="padding-bottom:1em;">Select Admin Action</h2>
+        </div>
+        <div class="col-md-2 "></div>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-md-8" style="margin: 0 auto;">
+            <div class="col-md-4 ">
+                @Html.ActionLink("Add Review", "Add", "Admin", null, new { @class = "btn btn-primary", @style = "padding: 0.33em 2em" })
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("Edit Review", "Edit", "Admin", null, new { @class = "btn btn-primary", @style = "padding: 0.33em 2em" })
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("Delete Review", "Remove", "Admin", null, new { @class = "btn btn-primary", @style = "padding: 0.33em 2em" })
+            </div>
+        </div>
+    </div>
