@@ -30,7 +30,6 @@ namespace ReviewSiteV1.Controllers
 
         public ActionResult Add()
         {
-            ViewBag.Message = "Edit Posted Reviews.";
             return View();
         }
 
@@ -93,14 +92,16 @@ namespace ReviewSiteV1.Controllers
 
         public ActionResult Edit()
         {
-            ViewBag.Message = "Edit Posted Reviews.";
-            return View();
+            var reviewRepository = new ReviewRepository();
+            var ReviewList = reviewRepository.GetAll();
+            return View(ReviewList);
         }
 
         public ActionResult Remove()
         {
-            ViewBag.Message = "Delete Posted Reviews.";
-            return View();
+            var reviewRepository = new ReviewRepository();
+            var ReviewList = reviewRepository.GetAll();
+            return View(ReviewList);
         }
 
 

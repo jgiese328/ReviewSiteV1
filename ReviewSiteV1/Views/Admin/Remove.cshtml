@@ -1,7 +1,86 @@
-﻿
+﻿@model List<ReviewSiteV1.Models.Review>
 @{
     ViewBag.Title = "Remove";
 }
+<style>
+    .tabletd {
+        border-right: 1px solid black;
+        text-align: center;
+    }
 
-<h2>Remove</h2>
+    .tableborderleft {
+        border-left: 1px solid black;
+    }
 
+    .row [class*="col-"] {
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+    }
+
+    .row {
+        overflow: hidden;
+    }
+</style>
+<h2 class="text-center">Remove Reviews</h2>
+<br />
+<div class="col-sm-12">
+    @* Header *@
+    <div class="row" style="font-weight:bolder; background-color:indianred; color: white">
+        <div class="col-sm-1 tabletd tableborderleft">
+            <p>Id</p>
+        </div>
+        <div class="col-sm-2 tabletd">
+            <p>PublishDate</p>
+        </div>
+        <div class="col-sm-2 tabletd">
+            <p>ReviewHeader</p>
+        </div>
+        <div class="col-sm-5 tabletd">
+            <p>ReviewText</p>
+        </div>
+        <div class="col-sm-2 tabletd">
+            <p>ReviewType</p>
+        </div>
+    </div>
+    @* This area is building the view of each review *@
+    @foreach (var item in Model)
+    {
+        <div class="row" style="border-bottom: 1px solid black;">
+            <div class="col-sm-1 tabletd tableborderleft">
+                <p>@item.Id</p>
+            </div>
+            <div class="col-sm-2 tabletd">
+                <p>@item.PublishDate</p>
+            </div>
+            <div class="col-sm-2 tabletd">
+                <p>@item.ReviewHeader</p>
+            </div>
+            <div class="col-sm-5 tabletd" style="text-align:left">
+                @item.ReviewText
+            </div>
+            <div class="col-sm-2 tabletd">
+                @item.ReviewType
+            </div>
+        </div>
+    }
+</div>
+<br /><br />
+
+@* For this, need to change to perform action right away probably. *@
+<div class="container" style="background-color:indianred; color:white; padding-top: 1em; border-radius: 10px;">
+    @using (var form = @Html.BeginForm("RemoveLoad", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" style="margin-bottom: 1.25em;">
+            <div class="md-col-6" style="margin-left:5%">Enter Id to Remove:</div>
+            <div class="md-col-6" style="margin-left:5%">
+                <input type="text" id="Id" name="Id" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 1.25em;">
+            <div class="md-col-6" style="text-align: left;margin-left:5%"><input type="submit" value="Remove Review" /></div>
+        </div>
+
+    }
+</div>
