@@ -19,20 +19,10 @@ namespace ReviewSiteV1.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public ActionResult Students()
-        //{
-        //    studentRepository = new StudentRepository();
-        //    var students = studentRepository.GetAll();
-
-        //    return View(students);
-        //}
-
         public ActionResult Add()
         {
             return View();
         }
-
 
         [HttpPost]
         public ActionResult AddSave(Review review, HttpPostedFileBase upload)
@@ -49,7 +39,6 @@ namespace ReviewSiteV1.Controllers
                 ViewBag.Error = "File Size is Too Large";
                 return View();
             }
-
 
             reviewRepository = new ReviewRepository();
 
@@ -68,7 +57,11 @@ namespace ReviewSiteV1.Controllers
             }
 
             reviewRepository.Create(review);
-            return RedirectToAction("Index", "Home");
+
+            TempData["Success"] = "Successfully Added Review ";
+            return View("Index");
+            // If I ever wanted to show addition right away:
+            // return RedirectToAction("Index", "Home");
         }
 
         public ActionResult GetImage(int imageId)
@@ -104,6 +97,14 @@ namespace ReviewSiteV1.Controllers
             return View(ReviewList);
         }
 
+        [HttpPost]
+        public ActionResult RemoveSave(int id)
+        {
+            var reviewRepository = new ReviewRepository();
+            reviewRepository.Delete(id);
+            TempData["Success"] = "Successfully Deleted Review " + id;
+            return View("Index");
+        }
 
 
     }

@@ -68,7 +68,7 @@
 
 @* For this, need to change to perform action right away probably. *@
 <div class="container" style="background-color:indianred; color:white; padding-top: 1em; border-radius: 10px;">
-    @using (var form = @Html.BeginForm("RemoveLoad", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (var form = @Html.BeginForm("RemoveSave", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="row" style="margin-bottom: 1.25em;">

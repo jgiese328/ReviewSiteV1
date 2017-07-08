@@ -1,6 +1,14 @@
 ﻿
 @{
     ViewBag.Title = "Index";
+    if (TempData["Success"] != null)
+    {
+      <div class="row">
+        <div class="col-md-8 ">
+            <h3 style="margin-top: 2em; padding-bottom:1em; color:lightgreen; font-weight: bold">Success:   @TempData["Success"]</h3>
+        </div>
+      </div>
+    }
 }
 <div class="row">
     <div class="col-md-8">
