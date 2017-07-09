@@ -1,6 +1,16 @@
 ﻿@model List<ReviewSiteV1.Models.Review>
 @{
     ViewBag.Title = "Remove";
+
+    if (@TempData["Error"] != null)
+    {
+        <div class="row">
+            <div class="col-md-8 ">
+                <h3 style="margin-top: 1.5em; padding-bottom:1em; color:red; font-weight: bold">ERROR: @TempData["Error"]</h3>
+            </div>
+        </div>
+    }
+
 }
 <style>
     .tabletd {
@@ -66,7 +76,7 @@
 </div>
 <br /><br />
 
-@* For this, need to change to perform action right away probably. *@
+@* Form for choosing ID to remove --- jquery check for if not populated, otherwise will hit exception and die *@
 <div class="container" style="background-color:indianred; color:white; padding-top: 1em; border-radius: 10px;">
     @using (var form = @Html.BeginForm("RemoveSave", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -84,3 +94,16 @@
 
     }
 </div>
+
+
+@*Force override of value if empty on submit*@
+<script>
+    $('form').submit(function () {
+        var input = $('#Id').val();
+        if (input == '') {
+            $('#Id').val('0');
+        }
+    });
+</script>
+
+<body onLoad="setDefaults();">

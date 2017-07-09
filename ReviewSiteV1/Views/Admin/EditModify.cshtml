@@ -1,0 +1,100 @@
+﻿@model ReviewSiteV1.Models.Review
+@{
+    ViewBag.Title = "Edit Modify";
+
+    if (@TempData["Error"] != null)
+    {
+        <div class="row">
+            <div class="col-md-8 ">
+                <h3 style="margin-top: 1.5em; padding-bottom:1em; color:red; font-weight: bold">ERROR: @TempData["Error"]</h3>
+            </div>
+        </div>
+    }
+}
+
+<style>
+    .tabletd {
+        border-right: 1px solid black;
+        text-align: center;
+    }
+
+    .tableborderleft {
+        border-left: 1px solid black;
+    }
+
+    .row [class*="col-"] {
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+    }
+
+    .row {
+        overflow: hidden;
+    }
+</style>
+
+<div class="col-sm-12">
+    <h2 class="text-center">Edit Review</h2>
+    <br />
+    <div class="container" style="background-color:steelblue; border-radius: 10px; padding-top: 1em;   ">
+        @using (var form = @Html.BeginForm("EditSubmit", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            // The passed in object's values populate automatically using the HTML helper methods
+
+            @Html.AntiForgeryToken()
+            <div class="row" style="margin-bottom: 1.25em;  margin-left:1em;">
+                <div class="md-col-6" style="color:white;">Publish Date:</div>
+                <div class="md-col-6">
+                    @Html.TextBoxFor(x => x.PublishDate)
+                   
+                </div>
+            </div>
+
+            @Html.AntiForgeryToken()
+            <div class="row" style="margin-bottom: 1.25em; color:white; margin-left:1em;">
+                <div class="md-col-6">Title:</div>
+                <div class="md-col-6" >
+                    @Html.TextBoxFor(x => x.ReviewHeader @*, new { @Value = Model.ReviewHeader }*@)
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 1.25em; color:white; margin-left:1em;">
+                <div class="md-col-6">Review:</div>
+                <div class="md-col-6">
+                    @Html.TextAreaFor(x => x.ReviewText, new
+               {
+                   @style = "height: 4em;width: 75%;" @*, @Value = Model.ReviewText*@ })
+                </div>
+            </div>
+
+            // This actually fully retains the value of the passed in object
+            <div class="row" style="margin-bottom: 1.25em; color:white; margin-left:1em;">
+                @Html.DropDownListFor(x => x.ReviewType,
+                    new SelectList(Enum.GetValues(typeof(ReviewSiteV1.Models.ReviewType))),
+                    "Select Type")
+            </div>
+
+            // Not allowing image change. This is by design
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                <div class="md-col-6">
+                    <p style="color:yellow">File will not be updated, if needing to change file, delete and re-add the review</p>
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                <div class="md-col-6" style="text-align: left;"><input type="submit" value="Submit Changes" /></div>
+            </div>
+            @*Hiding the id in the form*@
+            @Html.HiddenFor(x => x.Id)
+
+        }
+    </div>
+</div>
+
+<script>
+jQuery(document).ready(function () {
+
+    jQuery('#PublishDate').datetimepicker();
+
+});
+</script>

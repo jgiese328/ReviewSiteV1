@@ -1,57 +1,78 @@
-﻿@model ReviewSiteV1.Models.Review
-@{
-    ViewBag.Title = "Remove";
-}
-@{ 
+﻿    @model ReviewSiteV1.Models.Review
+    @{
+        ViewBag.Title = "Add";
+    }
+    @{
         ViewBag.Title = "Add Review";
 
-        if (ViewBag.Error != "")
+        if (@TempData["Error"] != null)
         {
-        <span class = "text-danger">@ViewBag.Error</span>
-}
-}
-
-
-<h2 class="text-center">Add Review</h2>
-<br />
-<div class="container" style="background-color:darkslategray; color:white; border-radius: 10px; padding-top: 1em;   ">
-    @using (var form = @Html.BeginForm("AddSave", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
-            <div class="md-col-6">Title:</div>
-            <div class="md-col-6">
-                @Html.TextBoxFor(x => x.ReviewHeader)
+            <div class="row">
+                <div class="col-md-8 ">
+                    <h3 style="margin-top: 1.5em; padding-bottom:1em; color:red; font-weight: bold">ERROR: @TempData["Error"]</h3>
+                </div>
             </div>
-        </div>
-
-        <div class="row" style="margin-bottom: 1.25em;  margin-left:1em;">
-            <div class="md-col-6">Review:</div>
-            <div class="md-col-6">
-                @Html.TextAreaFor(x => x.ReviewText, new { @style = "height: 4em;width: 75%;" })
-            </div>
-        </div>
-
-
-        <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
-            @Html.DropDownListFor(x => x.ReviewType,
-                    new SelectList(Enum.GetValues(typeof(ReviewSiteV1.Models.ReviewType))),
-                    "Select Type")
-        </div>
-
-        /*
-         Handling the failure in the controller, but still causes the unhandled exception. Prevents writing to the database if image is too large, so at least that works.
-        */
-        <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
-            <div class="md-col-6">
-                <input type="file" id="image" name="upload" />
-                <p style="color:yellow">Max Size 3.5 MB</p>
-            </div>
-        </div>
-
-        <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
-            <div class="md-col-6" style="text-align: left;"><input type="submit" value="Add Review" /></div>
-        </div>
-
+        }
     }
-</div>
+
+    <h2 class="text-center">Add Review</h2>
+    <br />
+    <div class="container" style="background-color:darkslategray; color:white; border-radius: 10px; padding-top: 1em;   ">
+        @using (var form = @Html.BeginForm("AddSave", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            // Weird failure, needed Position:relative for datepicker
+            @Html.AntiForgeryToken()
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                <div class="md-col-6">Publish Date:</div>
+                <div style="position: relative; color: black" class="md-col-6">
+                    @Html.TextBoxFor(x => x.PublishDate, new { @Value = DateTime.Now })
+                </div>
+            </div>
+
+            @Html.AntiForgeryToken()
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                <div class="md-col-6">Title:</div>
+                <div class="md-col-6">
+                    @Html.TextBoxFor(x => x.ReviewHeader)
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 1.25em;  margin-left:1em;">
+                <div class="md-col-6">Review:</div>
+                <div class="md-col-6">
+                    @Html.TextAreaFor(x => x.ReviewText, new { @style = "height: 4em;width: 75%;" })
+                </div>
+            </div>
+
+
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                @Html.DropDownListFor(x => x.ReviewType,
+                        new SelectList(Enum.GetValues(typeof(ReviewSiteV1.Models.ReviewType))),
+                        "Select Type")
+            </div>
+
+
+            /*
+             Handling the failure in the controller, but still causes the unhandled exception. Prevents writing to the database if image is too large, so at least that works.
+            */
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                <div class="md-col-6">
+                    <input type="file" id="image" name="upload" />
+                    <p style="color:yellow">Max Size 3.5 MB</p>
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 1.25em; margin-left:1em;">
+                <div class="md-col-6" style="text-align: left;"><input type="submit" value="Add Review" /></div>
+            </div>
+
+        }
+    </div>
+
+    <script>
+    jQuery(document).ready(function () {
+
+        jQuery('#PublishDate').datetimepicker();
+
+    });
+    </script>

@@ -1,6 +1,6 @@
 ﻿@model List<ReviewSiteV1.Models.Review>
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Select";
 }
 
 <style>
@@ -70,7 +70,7 @@
     </div>
 <br /><br />
 <div class="container" style="background-color:steelblue; color:white; padding-top: 1em; border-radius: 10px;">
-    @using (var form = @Html.BeginForm("EditLoad", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (var form = @Html.BeginForm("EditModify", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="row" style="margin-bottom: 1.25em;">

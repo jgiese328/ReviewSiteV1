@@ -27,17 +27,66 @@ namespace ReviewSiteV1.Controllers
         [HttpPost]
         public ActionResult AddSave(Review review, HttpPostedFileBase upload)
         {
-            ViewBag.Error = "";
 
-            if (!ModelState.IsValid)
+            // missing PublishDate
+            if (review.PublishDate == DateTime.MinValue)
             {
-                return View();
+                TempData["Error"] = TempData["Error"] + " Publish Date was empty";
             }
+
+
+            // missing Type
+            if (String.IsNullOrEmpty(review.ReviewType))
+            {
+                TempData["Error"] = TempData["Error"] + " Review Type was empty";
+            }
+
+
+            // Odd way to handle empty image, but it works
+            try
+            {
+                if (upload.GetType() == typeof(HttpPostedFileBase))
+                {
+                    // This will never hit
+                    TempData["Error"] = null;
+                }
+            }
+            catch {
+                TempData["Error"] = TempData["Error"] + " Image was not uploaded correctly";
+            }
+
+            // missing header
+            if (String.IsNullOrEmpty(review.ReviewHeader))
+            {
+                TempData["Error"] = TempData["Error"] + " Title was empty";
+            }
+
+
+            // missing review
+            if (String.IsNullOrEmpty(review.ReviewText))
+            {
+                TempData["Error"] = TempData["Error"] + " Review was empty";
+            }
+
+            // return with error
+            if (TempData["Error"] != null)
+            {
+                return View("Add");
+            }
+
 
             if (upload.ContentLength > 3500000)
             {
-                ViewBag.Error = "File Size is Too Large";
-                return View();
+                TempData["Error"] = "File Size is Too Large";
+                return View("Add");
+            }
+
+
+            // final catch if somehow there is an issue, but gets by other checks
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Unable to process, form data was missing";
+                return View("Add");
             }
 
             reviewRepository = new ReviewRepository();
@@ -90,6 +139,63 @@ namespace ReviewSiteV1.Controllers
             return View(ReviewList);
         }
 
+        [HttpPost]
+        public ActionResult EditModify(int id)
+        {
+            var reviewRepository = new ReviewRepository();
+            var reviewToModify = reviewRepository.GetById(id);
+            return View(reviewToModify);
+        }
+
+        [HttpPost]
+        public ActionResult EditSubmit(Review review)
+        {
+            // missing PublishDate
+            if (review.PublishDate == DateTime.MinValue)
+            {
+                TempData["Error"] = TempData["Error"] + " Publish Date was empty";
+            }
+
+            // missing Type
+            if (String.IsNullOrEmpty(review.ReviewType))
+            {
+                TempData["Error"] = TempData["Error"] + " Review Type was empty";
+            }
+
+            // missing header
+            if (String.IsNullOrEmpty(review.ReviewHeader))
+            {
+                TempData["Error"] = TempData["Error"] + " Title was empty";
+            }
+
+
+            // missing review
+            if (String.IsNullOrEmpty(review.ReviewText))
+            {
+                TempData["Error"] = TempData["Error"] + " Review was empty";
+            }
+
+            // return with error
+            if (TempData["Error"] != null)
+            {
+                var ReviewRepository = new ReviewRepository();
+                return View("EditModify", ReviewRepository.GetById(review.Id));
+            }
+
+            // final catch if somehow there is an issue, but gets by other checks
+            if (!ModelState.IsValid)
+            {
+                var ReviewRepository = new ReviewRepository();
+                TempData["Error"] = "Unable to process, form data was missing";
+                return View("EditModify", ReviewRepository.GetById(review.Id));
+            }
+
+            var reviewRepository = new ReviewRepository();
+            int changedId = reviewRepository.Update(review);
+            TempData["Success"] = "Successfully Updated Review " + review.Id;
+            return View("Index");
+        }
+
         public ActionResult Remove()
         {
             var reviewRepository = new ReviewRepository();
@@ -101,6 +207,22 @@ namespace ReviewSiteV1.Controllers
         public ActionResult RemoveSave(int id)
         {
             var reviewRepository = new ReviewRepository();
+
+            // check if default hidden value is passed -- means empty form 
+            if (id == 0)
+            {
+                TempData["Error"] = "Unable to process, no ID was specified";
+                var ReviewList = reviewRepository.GetAll();
+                return View("Remove", ReviewList);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Unable to process, no ID was specified";
+                var ReviewList = reviewRepository.GetAll();
+                return View("Remove");
+            }
+
             reviewRepository.Delete(id);
             TempData["Success"] = "Successfully Deleted Review " + id;
             return View("Index");
