@@ -13,17 +13,20 @@ namespace ReviewSiteV1.Controllers
         private ReviewRepository reviewRepository;
         // GET: Admin
 
+        // select action here
         public ActionResult Index()
         {
             ViewBag.Message = "Select Action";
             return View();
         }
 
+        // load add view
         public ActionResult Add()
         {
             return View();
         }
 
+        // add save
         [HttpPost]
         public ActionResult AddSave(Review review, HttpPostedFileBase upload)
         {
@@ -113,6 +116,7 @@ namespace ReviewSiteV1.Controllers
             // return RedirectToAction("Index", "Home");
         }
 
+        // action to populate image on the view
         public ActionResult GetImage(int imageId)
         {
             if (imageId != 0)
@@ -131,7 +135,7 @@ namespace ReviewSiteV1.Controllers
                 return View("Index");
         }
 
-
+        // edit view load
         public ActionResult Edit()
         {
             var reviewRepository = new ReviewRepository();
@@ -139,6 +143,7 @@ namespace ReviewSiteV1.Controllers
             return View(ReviewList);
         }
 
+        // loading modify page after line is chosen for update
         [HttpPost]
         public ActionResult EditModify(int id)
         {
@@ -147,6 +152,7 @@ namespace ReviewSiteV1.Controllers
             return View(reviewToModify);
         }
 
+        // submitting changes
         [HttpPost]
         public ActionResult EditSubmit(Review review)
         {
@@ -196,6 +202,7 @@ namespace ReviewSiteV1.Controllers
             return View("Index");
         }
 
+        // load remove view
         public ActionResult Remove()
         {
             var reviewRepository = new ReviewRepository();
@@ -203,6 +210,7 @@ namespace ReviewSiteV1.Controllers
             return View(ReviewList);
         }
 
+        // saving remove action
         [HttpPost]
         public ActionResult RemoveSave(int id)
         {

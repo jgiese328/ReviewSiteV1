@@ -69,9 +69,9 @@ namespace ReviewSiteV1.Repositories
             List<Review> reviews = new List<Review>();
             using (var context = new Context())
             {
-                reviews = context.Reviews.ToList();
-                var results = reviews.Where(x=>x.ReviewType == type);
-                return results.ToList();
+                // returning sorted list based on passed in ty
+                 reviews = context.Reviews.Include("Image").ToList();
+                 return reviews.Where(s => s.ReviewType == type).ToList();
             }            
         }
 

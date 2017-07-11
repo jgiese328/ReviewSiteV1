@@ -2,25 +2,31 @@
 @{
     ViewBag.Title = "Home Page";
 }
-    <div class="jumbotron">
-        <h2 style="text-align:center; font-weight:600; font-family: 'Bell MT'">Most Recent Reviews</h2>
+    <body style="background-color:#242628">
+    <h2 style="text-align:center; font-size: 3.7em; font-weight:600; font-family: 'Bell MT'; color: whitesmoke; margin-bottom: 0.75em;"><u>Most Recent Reviews</u></h2>
 
-        @* This area is building the view of each review *@        
+    <div>
+        @* This area is building the view of each review *@
         @foreach (var item in Model)
-        {        
-        <div class="row">
-            <div style="float:right; outline: 1px solid grey; background-color:#9A7E7E; text-align: center;" class="col-sm-11">
-                <p>@item.ReviewHeader - @item.PublishDate</p>
-                <div class="row">
-                    <div style="outline: 1px solid grey; min-height: 8em;" class="col-lg-3">
-                       <img style="max-width: 95%" src="@Url.Action("GetImage", "Admin", new { imageId = item.Image.Id })" />
-                    </div>
-                    <div style="background-color: #BC5C5C; outline:1px solid grey; min-height: 9.5em; height: 100%;" class="col-lg-9">
-                        @item.ReviewText
+        {
+            <div class="row" style="font-family: lucida; margin-bottom: 1.3em;">
+                <div style="float:right; border-radius:10px; background-color:#994343; text-align: left;" class="col-sm-11">
+                    <span style="float:left; color:white; margin-top:0.33em; font-weight: bolder; font-size:2em;"><b>@DateTime.Parse(item.PublishDate.ToString()).ToString("MM-dd-yyyy")</b></span>
+                    <span class="col-lg-7" style="float:right; color:whitesmoke; font-size:2.75em; font-weight: 900; font-family: lucida; ">@item.ReviewHeader</span>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="row">
+                        <div style="min-height: 8em;" class="text-center col-lg-3">
+                            <img style="max-width: 95%" src="@Url.Action("GetImage", "Admin", new { imageId = item.Image.Id })" />
+                        </div>
+                        <div style="padding:1em 1em; border-radius:10px; background-color: #cc8080; min-height: 9.5em; font-weight:300; height: 100%;" class="col-lg-9">
+                            @item.ReviewText
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
+</body>
+
     

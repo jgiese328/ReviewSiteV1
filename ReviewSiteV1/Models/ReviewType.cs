@@ -8,11 +8,8 @@ namespace ReviewSiteV1.Models
 {
     public enum ReviewType
     {
-        [Description("Anime")]
         Anime,
-        [Description("Anime")]
         Game,
-        [Description("Anime")]
         Movie
     }
 }

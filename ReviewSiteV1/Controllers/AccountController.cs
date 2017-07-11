@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ReviewSiteV1.Models;
 
+// Not using this page
+
 namespace ReviewSiteV1.Controllers
 {
     [Authorize]

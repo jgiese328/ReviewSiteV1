@@ -9,6 +9,7 @@ namespace ReviewSiteV1.Controllers
 {
     public class HomeController : Controller
     {
+        // Main view page
         public ActionResult Index()
         {
             var reviewRepository = new ReviewRepository();
@@ -16,25 +17,30 @@ namespace ReviewSiteV1.Controllers
             return View(ReviewList);
         }
 
+        // The following are all locked to respective types
+
         public ActionResult Anime()
         {
             ViewBag.Message = "Anime Specific Reviews.";
-
-            return View();
+            var reviewRepository = new ReviewRepository();
+            var ReviewList = reviewRepository.GetAll("Anime");
+            return View(ReviewList);
         }
 
         public ActionResult Movie()
         {
             ViewBag.Message = "Movie Specific Reviews.";
-
-            return View();     
+            var reviewRepository = new ReviewRepository();
+            var ReviewList = reviewRepository.GetAll("Movie");
+            return View(ReviewList);
         }
 
         public ActionResult Game()
         {
             ViewBag.Message = "Game Specific Reviews.";
-
-            return View();
+            var reviewRepository = new ReviewRepository();
+            var ReviewList = reviewRepository.GetAll("Game");
+            return View(ReviewList);
         }
 
     }
